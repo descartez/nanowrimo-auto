@@ -40,4 +40,4 @@ class Text:
                         combined_model = model
         self.model = combined_model
 
-    def create_chaper(self, number_of_chapters):
+    def create_prompt(self):
