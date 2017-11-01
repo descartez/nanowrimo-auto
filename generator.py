@@ -3,6 +3,7 @@ import markovify
 import os
 import re
 import spacy
+import random
 
 
 
@@ -20,8 +21,6 @@ class POSifiedText(markovify.Text):
 
 # Creates a "character" class, that can load in mulitple files.
 class Text:
-    def __init__(self):
-        self.model = None
 
     def create_model(self, file):
         with open(file) as f:
@@ -40,4 +39,12 @@ class Text:
                         combined_model = model
         self.model = combined_model
 
-    def create_prompt(self):
+    def create_prompt(self, size):
+        return self.model.make_short_sentence(size)
+
+
+prompt_sizes = [140, 280, 420]
+
+text = Text()
+text.create_model_from_dir("texts")
+print(text.create_prompt(random.choice(prompt_sizes)))
