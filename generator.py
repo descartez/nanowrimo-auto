@@ -21,6 +21,8 @@ class POSifiedText(markovify.Text):
 
 # Creates a "character" class, that can load in mulitple files.
 class Text:
+    def __init__(self):
+        self.prompt_sizes = [140, 280, 420]
 
     def create_model(self, file):
         with open(file) as f:
@@ -39,12 +41,19 @@ class Text:
                         combined_model = model
         self.model = combined_model
 
-    def create_prompt(self, size):
-        return self.model.make_short_sentence(size)
+    def create_prompt(self):
+        return self.model.make_short_sentence(self.prompt_sizes)
+
+    def write_file(self, name):
+        prompt = self.create_prompt()
+        operating_file = open(("texts/original/" + name), "w")
+        operating_file.write("PROMPT: \"" + str(prompt) + "\"")
+        operating_file.close()
 
 
 prompt_sizes = [140, 280, 420]
 
 text = Text()
 text.create_model_from_dir("texts")
-print(text.create_prompt(random.choice(prompt_sizes)))
+text.write_file("text_2.txt")
+
